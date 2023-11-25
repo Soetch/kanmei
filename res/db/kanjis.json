@@ -1,0 +1,64 @@
+{
+    "jlptn5": [
+        {
+            "id": 1,
+            "kanji": "一",
+            "furigana": "いち",
+            "translation": "one"
+        },
+        {
+            "id": 2,
+            "kanji": "二",
+            "furigana": "に",
+            "translation": "two"
+        },
+        {
+            "id": 3,
+            "kanji": "三",
+            "furigana": "さん",
+            "translation": "three"
+        },
+        {
+            "id": 4,
+            "kanji": "四",
+            "furigana": "し",
+            "translation": "four"
+        },
+        {
+            "id": 5,
+            "kanji": "五",
+            "furigana": "ご",
+            "translation": "five"
+      },
+      {
+        "id": 6,
+        "kanji": "六",
+        "furigana": "ろく",
+        "translation": "six"
+        },
+        {
+            "id": 7,
+            "kanji": "七",
+            "furigana": "しち",
+            "translation": "seven"
+        },
+        {
+            "id": 8,
+            "kanji": "八",
+            "furigana": "はち",
+            "translation": "eight"
+        },
+        {
+            "id": 9,
+            "kanji": "九",
+            "furigana": "きゅう",
+            "translation": "nine"
+        },
+        {
+            "id": 10,
+            "kanji": "十",
+            "furigana": "じゅう",
+            "translation": "ten"
+        }
+    ]
+}  
