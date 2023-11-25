@@ -1,48 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const fs = require("fs")
+const KanjiDisplay = () => {
+  const [kanjiData, setKanjiData] = useState([]);
+  const [usedIds, setUsedIds] = useState(new Set());
+  const [currentId, setCurrentId] = useState(null);
 
-// Read the JSON file
-const rawData = fs.readFileSync('jlptn5.json');
-const jlptn5Data = JSON.parse(rawData);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://raw.githubusercontent.com/Soetch/kanmei/main/res/db/kanjis.json');
+        const data = await response.json();
+        setKanjiData(data.jlptn5);
+        setCurrentId(getRandomUnusedId());
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-const getRandomUnusedId = () => {
+    fetchData();
+  }, []); // Empty dependency array ensures useEffect runs only once on component mount
+
+  const getRandomUnusedId = () => {
     let randomId;
 
     do {
-        randomId = Math.floor(Math.random() * jlptn5Data.jlptn5.length) + 1;
+      randomId = Math.floor(Math.random() * kanjiData.length) + 1;
     } while (usedIds.has(randomId));
 
-    usedIds.add(randomId);
+    setUsedIds(new Set(usedIds).add(randomId));
     return randomId;
-};
+  };
 
-const getRandomKanjiById = (id) => {
-    const kanjiEntry = jlptn5Data.jlptn5.find(entry => entry.id === id);
+  const getRandomKanjiById = (id) => {
+    const kanjiEntry = kanjiData.find(entry => entry.id === id);
 
     if (kanjiEntry) {
-        return kanjiEntry.kanji;
+      return kanjiEntry.kanji;
     } else {
-        return "Kanji not found";
+      return "Kanji not found";
     }
-};
+  };
 
-const KanjiDisplay = () => {
-    const [usedIds, setUsedIds] = useState(new Set());
-    const [currentId, setCurrentId] = useState(getRandomUnusedId());
+  const handleClickNewKanji = () => {
+    const newId = getRandomUnusedId();
+    setCurrentId(newId);
+  };
 
-    const handleClickNewKanji = () => {
-        const newId = getRandomUnusedId();
-        setCurrentId(newId);
-    };
-
-    return (
-        <div>
-            <h1>Random Kanji Display</h1>
-            <p>Kanji: {getRandomKanjiById(currentId)}</p>
-            <button onClick={handleClickNewKanji}>New Random Kanji</button>
-        </div>
+  return (
+    <div>
+      <h1>Random Kanji Display</h1>
+      <p>Kanji: {currentId && getRandomKanjiById(currentId)}</p>
+      <button onClick={handleClickNewKanji}>New Random Kanji</button>
+    </div>
   );
 };
 
-export default DailyKanji;
+export default KanjiDisplay;
